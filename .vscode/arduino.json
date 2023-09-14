@@ -1,7 +1,0 @@
-{
-    "board": "arduino:avr:uno",
-    "programmer": "avrisp",
-    "output": ".arduino/output",
-    "sketch": "oppgaver/led-strip/led-strip.ino",
-    "port": "COM7"
-}
