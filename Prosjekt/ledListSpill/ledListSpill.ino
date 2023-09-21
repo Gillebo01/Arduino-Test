@@ -54,6 +54,7 @@ void loop() {
     ring.setPixelColor(3,0,100,0);
     ring.setPixelColor(ring.numPixels()-4,0,100,0);
     ring.setPixelColor(4,0,50,75);
+    
     for(int i=0;i<point_player0;i++){
       ring.setPixelColor(i,100,0,0);
     }
@@ -111,6 +112,9 @@ void loop() {
 
 //IF PLAYER 1 is playing
     if(player == 1){
+     ring.setPixelColor( 27,80,80,80);
+     ring.setPixelColor( 26,20,0,20);
+     ring.setPixelColor( 25,20,0,20);
 
 //When Player 1 is pushing the button
       if(!digitalRead(button1_PIN)){ 
@@ -142,6 +146,9 @@ void loop() {
 
 //IF PLAYER 0 is playing
     if(player == 0){ //Si c est au joureur 1
+    ring.setPixelColor( 4,80,80,80);
+    ring.setPixelColor( 5,20,0,20);
+    ring.setPixelColor( 6,20,0,20);
 
 //When Player 0 is pushing the button
       if(!digitalRead(button0_PIN)){
