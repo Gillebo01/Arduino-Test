@@ -1,8 +1,8 @@
 #include <Adafruit_NeoPixel.h> //used to control the ring
 
 #define RING_PIN 3      //control PIN of the neopixel ring
-#define button0_PIN 13   //control PIN for the first button
-#define button1_PIN 12   //control PIN for the 2nd button
+#define button0_PIN 12   //control PIN for the first button
+#define button1_PIN 13   //control PIN for the 2nd button
 #define num_LED 32      //number of LED on the ring
 
 
