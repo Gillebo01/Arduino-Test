@@ -13,8 +13,9 @@ const uint16_t motorSpeed = 250;
 
 int rightSens;
 int leftSens;
-int centerRightSens;
-int centerLeftSens;
+int centerRightSens=0;
+int centerLeftSens=0;
+int frontSens= 0;
 bool buttonstate = false;
 
 unsigned long preMillis = 0;
@@ -27,25 +28,24 @@ void setup()
     proxSensors.initThreeSensors();
 }
 
-void forward(long count)
+void sensorRead()
 {
-    encoders.getCountsAndResetLeft();
-    encoders.getCountsAndResetRight();
+    proxSensors.read();
+    leftSens = proxSensors.countsLeftWithLeftLeds();
+    centerLeftSens = proxSensors.countsFrontWithLeftLeds();
+    centerRightSens = proxSensors.countsFrontWithRightLeds();
+    rightSens = proxSensors.countsRightWithRightLeds();
 
-    long countsLeft = 0;
-    long countsRight = 0;
-    motors.setSpeeds(motorSpeed, motorSpeed);
-    while (countsLeft < count)
-    {
-        countsLeft += encoders.getCountsAndResetLeft();
-        countsRight += encoders.getCountsAndResetRight();
-        display.gotoXY(1, 1);
-        display.print(countsLeft);
-        display.print(" ");
-        delay(2);
-    };
+    frontSens =(centerLeftSens + centerRightSens)/2;
+}
 
-    motors.setSpeeds(0, 0);
+void forward()
+{
+    sensorRead();
+
+    int angle = (((int32_t)turnAngle >> 16)*360 )>>16;
+
+   
 }
 
 void reverse(long count)
@@ -71,21 +71,8 @@ void reverse(long count)
 
 void turnRight(long count)
 {
-    encoders.getCountsAndResetLeft();
-    encoders.getCountsAndResetRight();
-
-    long countsLeft = 0;
-    long countsRight = 0;
-    motors.setSpeeds(motorSpeed, -motorSpeed);
-    while (countsLeft < count)
-    {
-        countsLeft += encoders.getCountsAndResetLeft();
-        countsRight -= encoders.getCountsAndResetRight();
-        display.gotoXY(1, 1);
-        display.print(countsLeft);
-        display.print(" ");
-        delay(2);
-    };
+    sensorRead();
+        }
 
     motors.setSpeeds(0, 0);
 }
@@ -108,14 +95,6 @@ int printEmoji(int x)
     display.gotoXY(0, 0);
 }
 
-void sensorRead()
-{
-    proxSensors.read();
-    leftSens = proxSensors.countsLeftWithLeftLeds();
-    centerLeftSens = proxSensors.countsFrontWithLeftLeds();
-    centerRightSens = proxSensors.countsFrontWithRightLeds();
-    rightSens = proxSensors.countsRightWithRightLeds();
-}
 
 void sensData()
 {
@@ -129,47 +108,8 @@ void sensData()
 void loop()
 {
 
-    // Wait for a button press
-    sensorRead();
-    bool buttonPress = buttonA.getSingleDebouncedPress();
-    bool buttonBPress = buttonB.getSingleDebouncedPress();
-
-    if (buttonPress)
-    {
-        unsigned long curMillis = millis();
-
-        buttonstate = true;
-
-        printText(0);
-        while
-            hvis telleren er 200ms så sjekker vi om det er noe foran bilen
-
-                if (curMillis - preMillis > 500 && buttonstate == true)
-                {
-                printText(1);
-                preMillis = curMillis;
-                }
-
-        if (curMillis - preMillis > 500)
-        {
-            printText(2);
-            preMillis = curMillis;
-        }
-
-        delay(1000);
-        forward(5000);
-
-        delay(1000);
-        turnRight(600);
-
-        delay(1000);
-        forward(5000);
-
-        delay(1000);
-        reverse(5000);
-
-        delay(1000);
-        turnRight(1200);
-        printEmoji(3);
-    }
+    
+    
 }
+
+
