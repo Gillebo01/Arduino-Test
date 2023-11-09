@@ -38,7 +38,9 @@ int faultBeep = 200;
 unsigned long wait = 0;
 unsigned long now = 0;
 
+
 void setup(){
+  //definerer pinner på arduinoen til diverse variabler og definerer om de er utganger eller innganger
   pinMode(redLED,OUTPUT);
   pinMode(greenLED,OUTPUT);
   pinMode(LED1,OUTPUT);
